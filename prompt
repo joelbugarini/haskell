@@ -1,0 +1,6 @@
+#!/bin/bash
+# My first script
+
+ghci
+:set prompt "λ= "
+:l baby.hs

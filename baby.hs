@@ -132,6 +132,12 @@ cylinder r h =
         topArea = pi * r ^2
     in sideArea + 2 * topArea
 
+--[let square x = x * x in (square 5, square 3, square 2)]
+--(let a = 100; b = 200; c = 300 in a*b*c, let foo="Hey "; bar = "there!" in foo ++ bar)  
+
+calcBmis' :: (RealFloat a) => [(a, a)] -> [a]  
+calcBmis' xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]  
+ 
 --P7 Transform a list, possibly holding lists as elements into a 
 --'flat' list by replacing each list with its elements (recursively).
 

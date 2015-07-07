@@ -43,12 +43,7 @@ myLength list = length list
 myReverse :: [list] -> [list]
 myReverse list = reverse list
 
---P6 Find out whether a list is a palindrome. 
---A palindrome can be read forward or backward; e.g. (x a m a x).
---isPalindrome :: [list] -> Bool
---isPalindrome list = if list == reverse list 
---                      then True
---                      else False
+
 
 --Pattern Matching
 lucky :: (Integral a) => a -> String
@@ -132,6 +127,23 @@ cylinder r h =
         topArea = pi * r ^2
     in sideArea + 2 * topArea
 
+--Case expressions
+--This is PATTERN MATCHING
+--Just sytactic sugar for case exp.
+head' :: [a] -> a
+head' [] = error "No head, it's empty"
+head' (x:_) = x
+
+--This is CASE EXPRESSIONS
+head'' :: [a] -> a
+head'' xs = case xs of [] -> error "No head, it's empty"
+                       (x:_) -> x
+
+--case expression of pattern -> result  
+--                   pattern -> result  
+--                   pattern -> result  
+--                   ...  
+
 --[let square x = x * x in (square 5, square 3, square 2)]
 --(let a = 100; b = 200; c = 300 in a*b*c, let foo="Hey "; bar = "there!" in foo ++ bar)  
 
@@ -141,3 +153,91 @@ calcBmis' xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
 --P7 Transform a list, possibly holding lists as elements into a 
 --'flat' list by replacing each list with its elements (recursively).
 
+
+
+---------------------------------------
+--           RECURSION               --
+---------------------------------------
+
+--To myself:
+--It's my duty to learn and breath recursion, 
+--to see and reduce complexity to a joke.
+
+
+--maximum
+--maximum' :: (Ord a) => [a] -> a
+--maximum' [] = error "maximum of empty list"
+--maximum' [x] = x
+--maximum' (x:xs)
+--    | x > maxTail = x
+--    | otherwise = maxTail
+--    where maxTail = maximum' xs
+
+maximum' :: (Ord a) => [a] -> a
+maximum' [] = error "maximum of empty list"
+maximum' [x] = x
+maximum' (x:xs) = max x (maximum' xs)
+
+replicate' :: (Num a, Ord a) => a -> b -> [b]
+replicate' a b
+    | a <= 0    = []
+    | otherwise = b:replicate' (a-1) b
+
+take' :: (Num a, Ord a) => a -> [b] -> [b]
+take' a _
+    | a <= 0 = []
+take' _ []   = []
+take' n (x:xs) = x : take' (n-1) xs
+
+reverse' :: [a] -> [a]
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+
+elem' :: (Eq a) => a -> [a] -> Bool
+elem' a [] = False
+elem' a (x:xs)
+    | a == x    = True
+    | otherwise = a `elem'` xs
+
+quicksort :: (Ord a) => [a] -> [a]
+quicksort [] = []
+quicksort (x:xs) = 
+    let smallerSorted = quicksort [a | a <- xs, a <= x]
+        biggerSorted = quicksort [a | a <- xs, a > x]
+    in smallerSorted ++ [x] ++ biggerSorted
+
+--P6 Find out whether a list is a palindrome. 
+--A palindrome can be read forward or backward; e.g. (x a m a x).
+isPalindrome :: (Eq list) => [list] -> Bool
+isPalindrome a
+    | a == x    = True
+    | otherwise = False 
+    where x = reverse a
+
+--P7 Flatten a nested list structure.
+--Transform a list, possibly holding lists as elements into a 'flat'
+-- list by replacing each list with its elements (recursively).
+--data NestedList a = Elem a | List [NestedList a]
+
+--flatten :: [a] -> [a]
+--flatten [] = []
+--flatten (x:xs) = x : flatten xs
+
+--P8 Eliminate consecutive duplicates of list elements.
+--If a list contains repeated elements they should be replaced with a
+--single copy of the element. The order of the elements should not be changed.
+compress :: (Eq a) => [a] -> [a]
+compress [] = []
+compress [x] = [x]
+compress (x:xs)  
+    | x `elem` xs = compress xs
+    | otherwise   = x : compress xs
+
+--P9 Pack consecutive duplicates of list elements into sublists. If a list 
+--contains repeated elements they should be placed in separate sublists.
+pack :: (Eq a) => [a] -> [a]
+pack [] = []
+pack [x] = [x]
+pack (x:xs)  
+    | x `elem` xs = pack xs
+    | otherwise   = x : pack xs

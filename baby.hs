@@ -241,3 +241,17 @@ pack [x] = [x]
 pack (x:xs)  
     | x `elem` xs = pack xs
     | otherwise   = x : pack xs
+
+--Mapping to alist with mean values
+--meaned :: [Num a] -> [Num a]
+--meaned [] = []
+--meaned [x] = [x]
+--meaned (x:xs) 
+--	| x == -1   = meaned(xs) 
+--	| otherwise = x:xs
+
+next :: (Num a) => [a] -> a
+next [x] = x
+next (x:xs) 
+	| x == -1   = next(xs) 
+	| otherwise = x

@@ -251,7 +251,8 @@ pack (x:xs)
 --	| otherwise = x:xs
 
 next :: (Num a) => [a] -> a
-next [x] = x
+next [x] = x 
 next (x:xs) 
-	| x == -1   = next(xs) 
+	| x ==-1   = next(xs) 
 	| otherwise = x
+

@@ -250,9 +250,15 @@ pack (x:xs)
 --	| x == -1   = meaned(xs) 
 --	| otherwise = x:xs
 
-next :: (Num a) => [a] -> a
-next [x] = x 
-next (x:xs) 
-	| x ==-1   = next(xs) 
-	| otherwise = x
+--next :: (Num a) => [a] -> a
+--next [x] = x 
+--next (x:xs) 
+--	| x ==-1   = next(xs) 
+--	| otherwise = x
 
+--map 
+map' :: (a -> b) -> [a] -> [b]
+map' _ [] = []
+map' f x:xs = f x : map f xs
+
+--filter :: 

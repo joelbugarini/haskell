@@ -12,7 +12,7 @@ boomBangs xs = [ if x < 10 then show x else "BANG!" | x <- xs, odd x]
 
 length' xs = sum [1 | _ <- xs]
 
-removeNonUppercase st = [ c | c <- st, c `elem` ['A'..'Z']]
+removeNonUppercase xs = [ x | x <- xs, x `elem` ['A'..'Z'] ]
 
 addThree :: Int -> Int -> Int -> Int
 addThree x y z = x + y + z
